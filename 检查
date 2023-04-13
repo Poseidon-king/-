@@ -1,0 +1,48 @@
+import requests
+
+def decrypt(keys, data):#解密函数
+    half=len(keys)//2
+    pre=keys[:half]
+    pro=keys[half:]
+    dic={pre[i]:pro[i] for i in range(half)}
+    o=''
+    for d in data:
+        try:
+            o+=str(dic[d])
+        except Exception as e:
+            pass
+    #res=''.join([dict[d] for d in data])
+    return o
+
+def get_data(keyword,start_date,end_date):
+    url_2='http://index.baidu.com/Interface/ptbk?uniqid='
+    url_1='http://index.baidu.com/api/SearchApi/index?word='+str(keyword)+'&area=0&startDate='+str(start_date)+'&endDate='+str(end_date)
+    headers = {
+            'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_4) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/79.0.3945.130 Safari/537.36',
+            'cookie':'CHKFORREG=6088fb8650c1153525e071e7202d10a6; BIDUPSID=723331865C7A2AC6BB454984F99B221B; PSTM=1639755153; __yjs_duid=1_232b1a29a1e00de52ca804599ecbb3471639809088266; BAIDU_WISE_UID=wapp_1656386529573_45; ZFY=pEva2RDHNEI281vp0y60HLzyNHqZpA7fKd7hTEo6iC8:C; MCITY=-75%3A; BAIDUID=6C36E6B7933B59E9B89D18F7E5494C0E:FG=1; BAIDUID_BFESS=6C36E6B7933B59E9B89D18F7E5494C0E:FG=1; sensorsdata2015jssdkcross=%7B%22distinct_id%22%3A%221840ecb0ad543-058c1e1c828cce-7b555472-1327104-1840ecb0ad690a%22%2C%22first_id%22%3A%22%22%2C%22props%22%3A%7B%22%24latest_traffic_source_type%22%3A%22%E7%9B%B4%E6%8E%A5%E6%B5%81%E9%87%8F%22%2C%22%24latest_search_keyword%22%3A%22%E6%9C%AA%E5%8F%96%E5%88%B0%E5%80%BC_%E7%9B%B4%E6%8E%A5%E6%89%93%E5%BC%80%22%2C%22%24latest_referrer%22%3A%22%22%7D%2C%22%24device_id%22%3A%221840ecb0ad543-058c1e1c828cce-7b555472-1327104-1840ecb0ad690a%22%7D; __bid_n=1843d1894cce0d04304207; FEID=v10-f6a7d520a6913976d120e450d7f730fa568592a1; __xaf_fpstarttimer__=1671029116446; __xaf_thstime__=1671029116605; __xaf_fptokentimer__=1671029116823; FPTOKEN=f5N6QE8X97RpOoYlhBWcoY3zRHWRltWQXknTZxPZm7GWEdbxPMticVPC1yuVBpa4Qq29bWQN1QaMtZ62KRaXhplwH4n8s7vCxPsqT8O8/Oiisb3eZRcD1iUhOKPOIjs/VPProz7xIHBQ5z9XHxNOFIX58qNdnCVJmfvgV8LLo2A+QYhE2CHIHMw6u7zduZh1doBA9evZeQ56mZWMDZzLNy1yHZmEUwP3sUxn/F6sMu9QCnsUEaMNhQTzjSHuq3+bjtfj/xtIdX+mBm/qqJrM59nM6AEEkllfONNUtC3rfnIkniqDNKL8TR9vLiZjqRWD9Xywudz6fJaondlex4VWi2tlO8FYKswvFwuM61hxt9uLRhvdAHbFHTA6+ecIHE2+zp9Tt9jPMq0QfKGoce3G3A==|CW9ROj9eIlAMV1OLuWYiCIn18lC1GYcP+TUnd+ja9Mg=|10|0e3550fdda3fc5e32d58b0d9ae294aec; BDUSS=VjMUR2aGNkUX52S1JQZWp5LUNUaWlscVdQdHIwQlFkN2RnZXB2aDNoMjJTMTlrSVFBQUFBJCQAAAAAAQAAAAEAAACB1NAeAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAALa-N2S2vjdkZ3; Hm_lvt_d101ea4d2a5c67dab98251f0b5de24dc=1681375242; bdindexid=4btvsblvnrtetcrt4s6mtomsa0; SIGNIN_UC=70a2711cf1d3d9b1a82d2f87d633bd8a04313876900iGJ0QOgpoMbv0DOoAzWzjn3hxAytEv4cadi1szCmbYgNdO0EowMmJfn9MxkCWWY7k0lYhTwREeBEMhZcqRICl8qYj3Iuk%2BY0RJnA5ITBRSnUGilqkrn4Qt71FQHun5j02OndbLJLLWiOdvam8QYs8p7SCAbhsgocYzjPSYkqpoAE8jt%2FFke%2BgzgbGxLlsh9bFjxLDWxrq9f%2BlJvQpSp%2ByprLSqpg4YlOXxXENnxUlMhEv65sduBWVezWbdjU2CkTuEwj2EfTPZqUuPQgVwP3pGQ3ZbbSxKmlqmKtKkCDXHo%3D03109451091409056089527699790034; __cas__rn__=431387690; __cas__st__212=6a08099830e5aeea0bdace6f63214088c7e87c7fe810b1d576f3a6eadfd67014ae917fe16492ea138c425fc9; __cas__id__212=47362166; CPID_212=47362166; CPTK_212=858786566; Hm_lpvt_d101ea4d2a5c67dab98251f0b5de24dc=1681375295; ab_sr=1.0.1_NGM0YmMxMzNiZDM5MWNlMGYwMGU4MzZlODI5NmRmY2U3OTU0ZWMyMmU4ZGE2NGUxNmI0NjUzNjcxMjRkZjE0Yjk5M2I5ZWFkNGUwOTdjY2YzNDFhMjhjZWMxY2NjN2Y2NGZkOTIyNjliMTEyMDQ4NzlhZDdmMGNkNGExMzk4OWVhZDEwZDZhYzgzNTE2NDgyYWQwY2UxY2NmZDYxNzE1MA==; BDUSS_BFESS=VjMUR2aGNkUX52S1JQZWp5LUNUaWlscVdQdHIwQlFkN2RnZXB2aDNoMjJTMTlrSVFBQUFBJCQAAAAAAQAAAAEAAACB1NAeAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAALa-N2S2vjdkZ3; RT="z=1&dm=baidu.com&si=fd27520e-62ee-46e5-9efc-b6db66440b2f&ss=lgeveicn&sl=0&tt=0&bcn=https%3A%2F%2Ffclog.baidu.com%2Flog%2Fweirwood%3Ftype%3Dperf"'#补充自己的cookie
+        }
+    res=requests.get(url_1,headers=headers)
+    data=res.json().get('data')['userIndexes'][0]['all']['data']
+    uniqid=res.json().get('data').get('uniqid')
+    res2=requests.get(url_2+str(uniqid),headers=headers)
+    keys=eval(res2.text)['data']
+    #o=''
+    #for i in decrypt(keys,data).split(','):
+        #o+=str(i)+'\n'
+    return decrypt(keys,data).split(',')
+
+
+keyword_list=['金融科技']
+
+result_dict={}
+start_dates=['20110101','20120101','20130101','20140101','20150101','20160101','20170101','20180101','20190101','20200101','20210101','20220101','20230101']
+end_dates=['20111231','20121231','20131231','20141231','20151231','20161231','20171231','20181231','20191231','20200101','20210101','20220101','20230101']
+for keyword in keyword_list:
+    o_all=[]
+    for i in range(len(end_dates)):
+        sa=get_data(keyword,start_dates[i],end_dates[i])
+        o_all+=sa
+        print(end_dates[i])
+        time.sleep(2)
+    result_dict[keyword]=o_all
+    print('done',keyword)
